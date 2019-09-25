@@ -17,6 +17,31 @@ function Raspi_config() =
             ["bore_spread_h", bore_spread_h]
         ];
 
+module Raspi_BoreHoles(config) {
+    width = get(config, "width");
+    height = get(config, "height");
+
+    bore_locations = [
+        [
+        -width/2 + 3.5, 
+        -height/2 + 3.5, 
+        0],[
+        -width/2 + 3.5 + get(config, "bore_spread_w"), 
+        -height/2 + 3.5,
+        0],[
+        -width/2 + 3.5, 
+        -height/2 + 3.5 + get(config, "bore_spread_h"), 
+        0],[
+        -width/2 + 3.5 + get(config, "bore_spread_w"), 
+        -height/2 + 3.5 + get(config, "bore_spread_h"), 
+        0]
+    ];
+
+    for (l = bore_locations)
+        translate(l)
+        children();
+}
+
 module Raspi(config) {
     width = get(config, "width");
     height = get(config, "height");
@@ -26,25 +51,8 @@ module Raspi(config) {
         translate([-width/2, -height/2, 0])
         cube([width, height, pcb_height]);
         
-        translate([
-                -width/2 + 3.5, 
-                -height/2 + 3.5, 
-                -1])
-        cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
-        translate([
-                -width/2 + 3.5 + get(config, "bore_spread_w"), 
-                -height/2 + 3.5, 
-                -1])
-        cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
-        translate([
-                -width/2 + 3.5 + get(config, "bore_spread_w"), 
-                -height/2 + 3.5 + get(config, "bore_spread_h"), 
-                -1])
-        cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
-        translate([
-                -width/2 + 3.5, 
-                -height/2 + 3.5 + get(config, "bore_spread_h"), 
-                -1])
+        translate([0, 0, -1])
+        Raspi_BoreHoles(config)
         cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
     }
     

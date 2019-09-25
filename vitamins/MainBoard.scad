@@ -17,24 +17,31 @@ function Mainboard_config() =
             ["bore_spread_h", bore_spread_h]
         ];
 
+module Mainboard_BoreHoles(config) {
+    bore_spread_w = get(config, "bore_spread_w");
+    bore_spread_h = get(config, "bore_spread_h");
+    
+    for (i = [-1, 1])
+        for (j = [-1, 1])
+        translate([
+                i*bore_spread_w/2, 
+                j*bore_spread_h/2,
+                0])
+        children();
+}
+
 module Mainboard(config) {
     width = get(config, "width");
     height = get(config, "height");
-    bore_spread_w = get(config, "bore_spread_w");
-    bore_spread_h = get(config, "bore_spread_h");
     pcb_height = get(config, "pcb_height");
     
     difference() {
         translate([-width/2, -height/2, 0])
         cube([width, height, pcb_height]);
         
-        for (i = [-1, 1])
-            for (j = [-1, 1])
-            translate([
-                    i*bore_spread_w/2, 
-                    j*bore_spread_h/2,
-                    -1])
-            cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
+        Mainboard_BoreHoles(config)
+        translate([0, 0, -1])
+        cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
             
         if (false)
             for (r = [0:17])

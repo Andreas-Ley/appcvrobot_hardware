@@ -17,23 +17,33 @@ function DCDCBoard_config() =
             ["bore_dist_h", bore_dist_h]
         ];
 
-module DCDCBoard(config) {
+
+module DCDCBoard_BoreHoles(config) {
     width = get(config, "width");
     height = get(config, "height");
     bore_dist_w = get(config, "bore_dist_w");
     bore_dist_h = get(config, "bore_dist_h");
+    
+    for (i = [-1, 1])
+        translate([
+                i*(width/2 - bore_dist_w), 
+                -i*(height/2 - bore_dist_h),
+                0])
+        children();
+}
+
+
+module DCDCBoard(config) {
+    width = get(config, "width");
+    height = get(config, "height");
     pcb_height = get(config, "pcb_height");
     
     difference() {
         translate([-width/2, -height/2, 0])
         cube([width, height, pcb_height]);
         
-        for (i = [-1, 1])
-            translate([
-                    i*(width/2 - bore_dist_w), 
-                    -i*(height/2 - bore_dist_h),
-                    -1])
-            cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
+        DCDCBoard_BoreHoles(config)
+        cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
     }
     
 };
