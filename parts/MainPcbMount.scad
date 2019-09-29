@@ -87,7 +87,7 @@ module RPiMount(camOffset = 0) {
         cylinder($fn=20, d = 3.2, h = 200);
         
         
-        translate([camOffset, 35, cam_width/2+1])
+        #translate([camOffset, 35, cam_width/2+1])
         rotate([-90, 0, 0]) {
             for (i = [0, 90, 180, 270]) {
                 rotate([0, 0, i])

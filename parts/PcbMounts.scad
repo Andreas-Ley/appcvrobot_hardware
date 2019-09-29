@@ -6,6 +6,7 @@ use <../vitamins/MainBoard.scad>
 use <../vitamins/PowerBoard.scad>
 use <../vitamins/DCDCBoard.scad>
 use <../vitamins/screws.scad>
+use <../utils/ZiptieHoop.scad>
 
 use <BasePlate.scad>
 
@@ -58,9 +59,6 @@ module PcbMountingColumn(height = pcb_spacing) {
         cylinder($fn=40, d1 = 15, d2=6, h = height);
         translate([0, 0, height+0.1])
         ScrewBore_M2x6();
-        
-        nut_m2_h = 2.0;
-        nut_m2_d = 4.5;
         
         translate([0, 0, height-4])
         NutHole_M2();
@@ -130,7 +128,7 @@ module PcbMounts() {
     difference() {
         union() {
             translate([0, 0, thickness])
-            cylinder($fn=80, d = bucket_radius*2, h = thickness);
+            cylinder($fn=200, d = bucket_radius*2, h = thickness);
             
             PcbMounts_PlacePi()
             Raspi_BoreHoles(Raspi_config())
@@ -154,6 +152,29 @@ module PcbMounts() {
             PowerBoard_BoreHoles(powerboardConfig, true, false)
             translate([0, 0, -pcb_spacing-11-1.6])
             PcbMountingColumn(pcb_spacing+11+1.6);
+            
+            
+            translate([-60, 60, thickness*2])
+            ZiptieHoop();
+            
+            translate([-72, 40, thickness*2])
+            rotate([0, 0, 90])
+            ZiptieHoop();
+
+            translate([-72, -10, thickness*2])
+            rotate([0, 0, 90])
+            ZiptieHoop();
+
+            translate([-55, -42, thickness*2])
+            ZiptieHoop();
+
+
+
+            translate([-20, -70, thickness*2])
+            ZiptieHoop();
+
+            translate([45, 7, thickness*2])
+            ZiptieHoop();
         }
         
         

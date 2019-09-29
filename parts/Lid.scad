@@ -30,10 +30,10 @@ module Lid() {
         
     difference() {
         translate([0, 0, thickness*2])
-        cylinder($fn=80, d1 = bucket_radius*2, d2=topDiameter, h = height);
+        cylinder($fn=200, d1 = bucket_radius*2, d2=topDiameter, h = height);
         difference() {
-            translate([0, 0, thickness*2])
-            cylinder($fn=80, d1 = bucket_radius*2-thickness*2, d2=topDiameter-thickness*2, h = height-thickness);
+            translate([0, 0, thickness*2-0.01])
+            cylinder($fn=200, d1 = bucket_radius*2-thickness*2, d2=topDiameter-thickness*2, h = height-thickness);
             
             VerticalConnectionScrewHoles()
             cylinder($fn=40, d = 12, h = 50);
@@ -51,7 +51,7 @@ module Lid() {
                 cube([200, wheelDiameter+10+thickness*2, 100]);
         }
         VerticalConnectionScrewHoles()
-        translate([0, 0, thickness*2])
+        translate([0, 0, thickness*2 - 0.01])
         cylinder($fn=40, d1 = 5, d2 = 10, h = 35);
 
         WheelMount(true)
@@ -61,15 +61,16 @@ module Lid() {
             cylinder($fn=40, d = wheelDiameter+10, h = wheelWidth + 50);
         
         Cutput_PiCamera();
-        
-        VerticalConnectionScrewHoles()
-        translate([0, 0, 25])
-        ScrewBore_M3x10();
 
     }
 }
 
-Lid();
+intersection() {
+    Lid();
+    
+    translate([70, 40, -40])
+    cube([40, 25, 80]);
+}
 
 for (i = [0:3])
 translate([i*20, 150, 0])

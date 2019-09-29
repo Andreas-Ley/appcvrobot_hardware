@@ -52,49 +52,22 @@ module WheelMount(left = true) {
 
 
 module BasePlate_BatteryLocations() {
-    translate([0, -25, -5])
+    translate([0, -25, -7])
+    rotate([180, 0, 180])
+    children();
+
+    translate([-43, -50, -7])
     rotate([180, 0, 0])
     children();
 
-    translate([-40, -50, -5])
-    rotate([180, 0, 0])
-    children();
-
-    translate([40, -50, -5])
+    translate([43, -50, -7])
     rotate([180, 0, 0])
     children();
 }
 
 
 module BasePlate() {
-    difference() {
-        union() {
-            cylinder($fn=80, d = bucket_radius*2, h = thickness);
-            
-            translate([16, 7, 0])
-            rotate([180, 0, 0])
-            ZiptieHoop();
 
-            translate([-60, -72, 0])
-            rotate([180, 0, 0])
-            ZiptieHoop();
-        }
-
-        VerticalConnectionScrewHoles()
-        translate([0, 0, thickness+1])
-        ScrewBore_M3x10();
-
-        CableDucts();
-
-        WheelMount(true)
-        cylinder($fn=40, d = wheelDiameter+10, h = wheelWidth + 50);
-
-        WheelMount(false)
-        cylinder($fn=40, d = wheelDiameter+10, h = wheelWidth + 50);
-                
-        Cutput_PiCamera();
-    }
-    
     size = lookup(NemaSideSize, Nema17_Andy);
     length = lookup(NemaLengthMedium, Nema17_Andy);
     extrusionDiameter = lookup(NemaRoundExtrusionDiameter, Nema17_Andy);
@@ -111,7 +84,7 @@ module BasePlate() {
                     -lookup(NemaSideSize, Nema17_Andy)/2 - thickness, 
                     0])
             cube([
-                size, 
+                size+thickness/2, 
                 size+2*thickness,
                 length+thickness]);
 
@@ -138,20 +111,10 @@ module BasePlate() {
             
             Nema17Motor_ScrewAttachment() {
                 translate([0, 0, -1])
-                cylinder($fn=40, d=2.3, thickness+2);
+                cylinder($fn=40, d=3.3, thickness+2);
             }
         }
     };
-    
-    mirror([1, 0, 0])
-    translate([baseDistance/2 - (22-14.8-2), 0, -lookup(NemaSideSize, Nema17_Andy)/2])
-    rotate([0, -90, 0])
-    Mount();
-    
-    translate([baseDistance/2 - (22-14.8-2), 0, -lookup(NemaSideSize, Nema17_Andy)/2])
-    rotate([0, -90, 0])
-    Mount();
-
 
     module BallMount(offset = 2) {
         ball_d = 40;
@@ -181,30 +144,86 @@ module BasePlate() {
         */
 
     }
-    translate([0, -bucket_radius +50/2, 0])
-    rotate([180, 0, 0])
-    BallMount(16);
-    
-    
     module BatteryHolder(clearence = 0.2) {
         difference() {
-            translate([-10, -21/2-thickness, -5])
-            cube([20, 21+thickness*2, 15]);
+            translate([-25, -21/2-thickness, -7])
+            cube([50, 21+thickness*2, 20]);
 
             translate([-75.0/2-clearence, -21.0/2-clearence, 0])
             cube([75+clearence*2, 21+clearence*2, 18+clearence*2]);
             
             translate([0, 0, -5])
-            NutHole_M3();
+            rotate([0, 0, 90])
+            NutHole_M2();
             translate([0, 0, 1])
-            ScrewBore_M3x10();
+            ScrewBore_M2x12();
         }
     };
 
-    
-    BasePlate_BatteryLocations()
-    BatteryHolder();
+    union() {
+        difference() {
+            union() {
+                cylinder($fn=200, d = bucket_radius*2, h = thickness);
+                
+                translate([16, 7, 0])
+                rotate([180, 0, 0])
+                ZiptieHoop();
+
+                translate([-60, -72, 0])
+                rotate([180, 0, 0])
+                ZiptieHoop();
+            }
+
+            VerticalConnectionScrewHoles()
+            translate([0, 0, thickness+1])
+            ScrewBore_M3x10();
+
+            CableDucts();
+
+            WheelMount(true)
+            cylinder($fn=40, d = wheelDiameter+10, h = wheelWidth + 50);
+
+            WheelMount(false)
+            cylinder($fn=40, d = wheelDiameter+10, h = wheelWidth + 50);
+                    
+            Cutput_PiCamera();
+        }
+        
+
+        
+        mirror([1, 0, 0])
+        translate([baseDistance/2 - (22-14.8-2), 0, -lookup(NemaSideSize, Nema17_Andy)/2])
+        rotate([0, -90, 0])
+        Mount();
+        
+        translate([baseDistance/2 - (22-14.8-2), 0, -lookup(NemaSideSize, Nema17_Andy)/2])
+        rotate([0, -90, 0])
+        Mount();
+
+
+
+        translate([0, -bucket_radius +50/2, 0])
+        rotate([180, 0, 0])
+        BallMount(16);
+        
+        
+
+        
+        BasePlate_BatteryLocations()
+        BatteryHolder();
+    }
 }
 
 
-BasePlate();
+intersection() {
+    BasePlate();
+    /*
+    union() {
+        translate([-10, -40, -50])
+        cube([20, 30, 180]);
+        
+        translate([40, -30, -50])
+        cube([50, 60, 80]);
+    }
+    */
+}
