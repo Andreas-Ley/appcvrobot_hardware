@@ -7,6 +7,9 @@ use <../vitamins/MainBoard.scad>
 use <../vitamins/PowerBoard.scad>
 use <../vitamins/DCDCBoard.scad>
 use <../vitamins/screws.scad>
+use <../vitamins/switch.scad>
+use <../vitamins/LCDScreen.scad>
+use <../vitamins/PiFan.scad>
 use <../parts/Wheel.scad>
 use <../parts/Lid.scad>
 use <../parts/BasePlate.scad>
@@ -16,8 +19,22 @@ include<../vitamins/StepperMotor.scad>
 
 
 module All(explode = 0.0) {
-translate([0, 0, max(0, explode-0.1) * 100])
-Lid();
+
+translate([0, 0, max(0, explode-0.1) * 100]) {
+    Lid();
+    
+    Lid_PlaceSwitch()
+    translate([0, 0, max(0, explode-0.8) * 500])
+    Switch();
+    
+    Lid_PlaceLCDScreen()
+    translate([0, 0, max(0, explode-0.8) * -300])
+    LCDScreen();
+    
+    Lid_PlaceFan()
+    translate([0, 0, max(0, explode-0.8) * -300])
+    PiFan();
+}
 
 translate([0, 0, explode * 150])
 VerticalConnectionScrewHoles()
@@ -52,6 +69,13 @@ WheelMount(false) {
 translate([0, 0, max(0, explode-0.5)*60])
 PcbsAssembled();
 
+translate([-5, -45, thickness*2])
+cube([10, 10, 27]);
+
+
+translate([-5, 5, thickness*2])
+cube([10, 10, 22]);
+
 /*
 translate([-20, 15, thickness+2]) {
     RPiMount(20);
@@ -82,14 +106,17 @@ Screw_M2x6();
 }
 
 
-//All();
+All();
 //rotate([0, 0, $t*360*2])
 //All(max(0, 1-$t*1.1));
-
+/*
 difference() {
-    All(0.12);
+    All(0.0);
 
-    translate([-200, 0, -200])
+    translate([-200, 50, -200])
+    cube([400, 400, 400]);
+
+    translate([0, -200, -200])
     cube([400, 400, 400]);
 }
-
+*/
