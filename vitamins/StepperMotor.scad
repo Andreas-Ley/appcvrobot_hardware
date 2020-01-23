@@ -1,4 +1,4 @@
-include<../../../Downloads/MCAD/stepper.scad>
+include<../extern/MCAD/stepper.scad>
 
 
 Nema17_Andy = [
