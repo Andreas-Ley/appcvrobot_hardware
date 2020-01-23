@@ -1,0 +1,3 @@
+[submodule "extern/MCAD"]
+	path = extern/MCAD
+	url = https://github.com/openscad/MCAD
