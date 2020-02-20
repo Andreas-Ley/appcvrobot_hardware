@@ -8,7 +8,7 @@ use <../vitamins/PowerBoard.scad>
 use <../vitamins/DCDCBoard.scad>
 use <../vitamins/screws.scad>
 use <../vitamins/switch.scad>
-use <../vitamins/Button.scad>
+use <../vitamins/button.scad>
 use <../vitamins/LCDScreen.scad>
 use <../vitamins/AdOn.scad>
 use <../vitamins/PiFan.scad>
@@ -119,9 +119,10 @@ Screw_M2x6();
 difference() {
     All(0.0);
 
-    //translate([-200, 50, -200])
-    //cube([400, 400, 400]);
-
+    translate([-200, 50, -200])
+    cube([400, 400, 400]);
+/*
     translate([-400, -200, -200])
     cube([400, 400, 400]);
+    */
 }
