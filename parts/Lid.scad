@@ -31,7 +31,7 @@ module LidScrewCone() {
 }
 
 module Lid_PlaceButton() {
-    translate([-40, -bucket_radius+130, Lid_height+thickness*2])
+    translate([-45, -bucket_radius+130, Lid_height+thickness*2])
     children();
 }
 
@@ -43,7 +43,7 @@ module Lid_PlaceLCDScreen() {
 }
 
 module Lid_PlaceAdOn() {
-    translate([-10, -bucket_radius+62, Lid_height+thickness*2 - thickness-3])
+    translate([0, -bucket_radius+62, Lid_height+thickness*2 - thickness-3])
     children();
 }
 
@@ -158,12 +158,13 @@ module Lid() {
         }
         
         Lid_PlaceAdOn()
-        AdOnBoreHoles()
         difference() {
+            AdOnBoreHoles()
             translate([0, 0, 0])
-            cylinder($fn=40, d=5.5, h=3.1);
-            translate([0, 0, -1])
-            cylinder($fn=40, d=2.8+0.2*2, h=10);
+            cylinder($fn=40, d1=5.5, d2=15, h=3.1);
+            //translate([0, 0, -1])
+            //cylinder($fn=40, d=2.8+0.2*2, h=10);
+            AdOnCutout();
         }
 
         
@@ -185,7 +186,7 @@ module Lid() {
             }
         }
         
-        translate([-30, 15, Lid_height+thickness+0.1])
+        translate([-30, 10, Lid_height+thickness+0.1])
         rotate([180, 0, 0])
         ZiptieHoop();
 
@@ -193,11 +194,11 @@ module Lid() {
         rotate([180, 0, 0])
         ZiptieHoop();
 
-        translate([-20, -73, Lid_height+thickness+0.1])
+        translate([-40, -40, Lid_height+thickness+0.1])
         rotate([180, 0, 0])
         ZiptieHoop();
         
-        translate([-20, -20, Lid_height+thickness+0.1])
+        translate([-20, -10, Lid_height+thickness+0.1])
         rotate([180, 0, 0])
         ZiptieHoop();
 /*

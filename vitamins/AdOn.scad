@@ -1,13 +1,13 @@
 module AdOnBoreHoles() {
-    for (x = [-75.4/2, 75.4/2+20])
-        for (y = [-31.4/2, 31.4/2+11.2])
+    for (x = [-50.0/2, 50.0/2])
+        for (y = [-30/2-5, 30/2+5])
             translate([x, y, 0])        
                 children();
 }
 
 
 module AdOn() {
-    
+    /*
     color("red") {
 
         translate([-70.7/2, -23.8/2, 7-11])
@@ -27,13 +27,13 @@ module AdOn() {
         cube([55, 20, 9]);
         
     }
-    
+    */
 };
 
 
 module AdOnCutout(clearence = 0.2) {
-    translate([-70.7/2, -23.8/2, 7-11])
-        cube([90, 35, 11]);
+    translate([-50.0/2, -30.0/2, -10])
+        cube([50, 30, 20]);
 
     AdOnBoreHoles()
     translate([0, 0, -5])        
