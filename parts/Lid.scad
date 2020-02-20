@@ -5,7 +5,7 @@ use <../vitamins/RaspiCamera.scad>
 use <../vitamins/screws.scad>
 use <../vitamins/switch.scad>
 use <../vitamins/LCDScreen.scad>
-use <../vitamins/Button.scad>
+use <../vitamins/button.scad>
 use <../vitamins/PiFan.scad>
 use <../vitamins/AdOn.scad>
 
