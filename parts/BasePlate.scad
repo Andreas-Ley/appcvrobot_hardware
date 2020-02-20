@@ -26,7 +26,7 @@ module CableDucts() {
     translate([25, 0, -20])
     cube([10, 13, 50]);
 
-    translate([-50, -80, -20])
+    translate([-55, -80, -20])
     cube([10, 17, 50]);
 }
 
