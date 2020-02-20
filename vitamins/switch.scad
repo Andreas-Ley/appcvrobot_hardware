@@ -4,7 +4,7 @@ module Switch() {
     
     color("darkgrey") {
         
-        translate([0, 0, -0.5])
+       translate([0, 0, -0.5])
         rotate([0, 20, 0])
         translate([-10/2, -6.2/2, -0.5])
         cube([10, 6.2, 3]);
@@ -22,6 +22,13 @@ module Switch() {
             translate([-0.4/2+i, -8, -8.7-5.8])
             cube([0.4, 8, 1]);
         }
+        
+        
+
+       
+      
+        
+       
     }
     
 };

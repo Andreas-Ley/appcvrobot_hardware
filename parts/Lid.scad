@@ -5,8 +5,9 @@ use <../vitamins/RaspiCamera.scad>
 use <../vitamins/screws.scad>
 use <../vitamins/switch.scad>
 use <../vitamins/LCDScreen.scad>
+use <../vitamins/Button.scad>
 use <../vitamins/PiFan.scad>
-
+use <../vitamins/AdOn.scad>
 
 use <BasePlate.scad>
 use <PcbMounts.scad>
@@ -29,14 +30,20 @@ module LidScrewCone() {
     }
 }
 
-module Lid_PlaceSwitch() {
-    translate([0, -bucket_radius+60, Lid_height+thickness*2])
+module Lid_PlaceButton() {
+    translate([-40, -bucket_radius+130, Lid_height+thickness*2])
     children();
 }
 
 
 module Lid_PlaceLCDScreen() {
-    translate([0, -bucket_radius+90, Lid_height+thickness*2 - thickness-3])
+    rotate([0,0,90])
+    translate([24, -bucket_radius+75, Lid_height+thickness*2 - thickness-3])
+    children();
+}
+
+module Lid_PlaceAdOn() {
+    translate([-10, -bucket_radius+62, Lid_height+thickness*2 - thickness-3])
     children();
 }
 
@@ -92,11 +99,20 @@ module Lid() {
             
             Cutput_PiCamera();
 
-            Lid_PlaceSwitch()
-            SwitchHole();
+            Lid_PlaceButton()
+            ButtonHole();
             
             Lid_PlaceLCDScreen()
             LCDScreenCutout();
+            
+            Lid_PlaceAdOn()
+            AdOnCutout();
+            difference() {
+            translate([0, 0, 0])
+            cylinder($fn=40, d=5.5, h=3.1);
+            translate([0, 0, -1])
+            cylinder($fn=40, d=2.8+0.2*2, h=10);
+        }
             
             Lid_PlaceFanDuct() {
                 translate([0, 0, -thickness-2])
@@ -140,6 +156,15 @@ module Lid() {
             translate([0, 0, -1])
             cylinder($fn=40, d=2.8+0.2*2, h=10);
         }
+        
+        Lid_PlaceAdOn()
+        AdOnBoreHoles()
+        difference() {
+            translate([0, 0, 0])
+            cylinder($fn=40, d=5.5, h=3.1);
+            translate([0, 0, -1])
+            cylinder($fn=40, d=2.8+0.2*2, h=10);
+        }
 
         
         Lid_PlaceFanDuct() 
@@ -168,10 +193,13 @@ module Lid() {
         rotate([180, 0, 0])
         ZiptieHoop();
 
-        translate([-30, -55, Lid_height+thickness+0.1])
+        translate([-20, -73, Lid_height+thickness+0.1])
         rotate([180, 0, 0])
         ZiptieHoop();
-
+        
+        translate([-20, -20, Lid_height+thickness+0.1])
+        rotate([180, 0, 0])
+        ZiptieHoop();
 /*
         WheelMount(false)
         translate([-55, 40, -thickness+0.1])

@@ -8,7 +8,9 @@ use <../vitamins/PowerBoard.scad>
 use <../vitamins/DCDCBoard.scad>
 use <../vitamins/screws.scad>
 use <../vitamins/switch.scad>
+use <../vitamins/Button.scad>
 use <../vitamins/LCDScreen.scad>
+use <../vitamins/AdOn.scad>
 use <../vitamins/PiFan.scad>
 use <../parts/Wheel.scad>
 use <../parts/Lid.scad>
@@ -23,13 +25,17 @@ module All(explode = 0.0) {
 translate([0, 0, max(0, explode-0.1) * 100]) {
     Lid();
     
-    Lid_PlaceSwitch()
+    Lid_PlaceButton()
     translate([0, 0, max(0, explode-0.8) * 500])
-    Switch();
+    Button();
     
     Lid_PlaceLCDScreen()
     translate([0, 0, max(0, explode-0.8) * -300])
     LCDScreen();
+    
+    Lid_PlaceAdOn()
+    translate([0, 0, max(0, explode-0.8) * -300])
+    AdOn();
     
     Lid_PlaceFan()
     translate([0, 0, max(0, explode-0.8) * -300])
@@ -106,17 +112,16 @@ Screw_M2x6();
 }
 
 
-All();
+//All();
 //rotate([0, 0, $t*360*2])
 //All(max(0, 1-$t*1.1));
-/*
+
 difference() {
     All(0.0);
 
-    translate([-200, 50, -200])
-    cube([400, 400, 400]);
+    //translate([-200, 50, -200])
+    //cube([400, 400, 400]);
 
-    translate([0, -200, -200])
+    translate([-400, -200, -200])
     cube([400, 400, 400]);
 }
-*/

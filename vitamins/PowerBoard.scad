@@ -3,10 +3,10 @@ use <../utils/struct.scad>
 function PowerBoard_config() =
         let (
             pcb_height = 1.57,
-            width = 70,
+            width = 90,
             height = 30,
             bore_diameter = 2.2,
-            bore_spread_w = 26*2.54,
+            bore_spread_w = 34*2.54,
             bore_spread_h = 26
         ) [
             ["pcb_height", pcb_height],
