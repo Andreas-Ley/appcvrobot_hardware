@@ -67,7 +67,8 @@ module NutHole(nut_diameter, nut_height, extends = 50) {
 };
 
 module NutHole_M2() {
-    NutHole(4.7, 2.2);
+//    NutHole(4.7, 2.2);
+    NutHole(4.8, 2.3);
 }
 
 module NutHole_M3() {

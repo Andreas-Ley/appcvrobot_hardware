@@ -30,20 +30,22 @@ module LidScrewCone() {
     }
 }
 
-module Lid_PlaceButton() {
-    translate([-45, -bucket_radius+130, Lid_height+thickness*2])
+module Lid_PlaceButton(index) {
+    translate([-50+index*10, 25, Lid_height+thickness*2])
     children();
 }
 
 
 module Lid_PlaceLCDScreen() {
     rotate([0,0,90])
-    translate([24, -bucket_radius+75, Lid_height+thickness*2 - thickness-3])
+    translate([25, -bucket_radius+75, Lid_height+thickness*2 - thickness-3])
     children();
 }
 
+AddOn_y = -bucket_radius+62;
+
 module Lid_PlaceAdOn() {
-    translate([0, -bucket_radius+62, Lid_height+thickness*2 - thickness-3])
+    translate([0, AddOn_y, Lid_height+thickness*2 - thickness-3])
     children();
 }
 
@@ -68,6 +70,35 @@ module Lid() {
         difference() {
             translate([0, 0, thickness*2])
             cylinder($fn=200, d1 = bucket_radius*2, d2=topDiameter, h = Lid_height);
+            
+            
+            translate([0, 0, thickness*2 + Lid_height - 0.5])
+            linear_extrude(height = 2) {
+                translate([45, AddOn_y, 0])
+                rotate([0, 0, 90])
+                scale(0.3)
+                import("logos/TU_Logo_kurz_Pantone_black_uncoated.svg", center=true);
+
+                translate([-45, AddOn_y, 0])
+                rotate([0, 0, 90])
+                scale(0.35)
+                import("logos/CVLogo.svg", center=true);
+                
+                translate([0, -5, 0])
+                rotate([0, 0, 90])
+                text("#01", size=8, halign="center", valign="center");
+                translate([12, -5, 0])
+                rotate([0, 0, 90])
+                text("Computer Vision", font = "Liberation Sans:style=Bold", size=3.5, halign="center", valign="center");
+                
+                for (b = lid_buttons)
+                    Lid_PlaceButton(b[0])
+                    rotate([0, 0, 90])
+                    translate([-8, 0, 0])
+                    text(b[1], size=4.5, font = "Liberation Sans:style=Bold", halign="right", valign="center");
+            }
+
+            
             difference() {
                 translate([0, 0, thickness*2-0.01])
                 cylinder($fn=200, d1 = bucket_radius*2-thickness*2, d2=topDiameter-thickness*2, h = Lid_height-thickness);
@@ -99,8 +130,9 @@ module Lid() {
             
             Cutput_PiCamera();
 
-            Lid_PlaceButton()
-            ButtonHole();
+            for (b = lid_buttons)
+                Lid_PlaceButton(b[0])
+                    ButtonHole();
             
             Lid_PlaceLCDScreen()
             LCDScreenCutout();

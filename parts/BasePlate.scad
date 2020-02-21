@@ -86,6 +86,14 @@ module BasePlate() {
                 size+thickness/2, 
                 size+2*thickness,
                 length+thickness]);
+            
+            translate([-size*0.6, -size, 0])
+            rotate([0, -45, 0])
+            cube([
+                size*2, 
+                size*2,
+                size*2]);
+            
 
             translate([
                     -lookup(NemaSideSize, Nema17_Andy)/2-1, 
@@ -123,7 +131,7 @@ module BasePlate() {
             union() {
                 sphere($fn=100, d = ball_d+thickness*2);
                 translate([0, 0, -ball_d/2-offset])
-                cylinder($fn=40, d1 = 50, d2 = 25, h = 10+offset);
+                cylinder($fn=100, d1 = 50, d2 = 25, h = 10+offset);
             }
             
             sphere($fn=100, d = ball_d+0.5);
@@ -146,7 +154,7 @@ module BasePlate() {
     module BatteryHolder(clearence = 0.2) {
         difference() {
             translate([-25, -21/2-thickness, -7])
-            cube([50, 21+thickness*2, 20]);
+            cube([50, 21+thickness*2, 15]);
 
             translate([-75.0/2-clearence, -21.0/2-clearence, 0])
             cube([75+clearence*2, 21+clearence*2, 18+clearence*2]);
@@ -168,10 +176,34 @@ module BasePlate() {
                 rotate([180, 0, 0])
                 ZiptieHoop();
 
+                translate([-25, 30, 0])
+                rotate([180, 0, 0])
+                ZiptieHoop();
+
                 translate([-60, -72, 0])
                 rotate([180, 0, 0])
                 ZiptieHoop();
+
+                translate([55, -68, 0])
+                rotate([180, 0, 0])
+                ZiptieHoop();
+
+                translate([-73, -50, 0])
+                rotate([180, 0, 90])
+                ZiptieHoop();
             }
+            
+            rotate([0, 180, 180])
+            translate([0, 0, -0.5])
+            linear_extrude(height = 2) {
+                translate([0, -40, 0])
+                text("Initial design: Andreas Ley", size=4, halign="center");
+                translate([0, -50, 0])
+                text("Adapted for TU-Berlin:", size=4, halign="center");
+                translate([0, -56, 0])
+                text("Alexander Wolters, Monika Kwiatkowski, Andreas Ley", size=4, halign="center");
+            }            
+            
 
             VerticalConnectionScrewHoles()
             translate([0, 0, thickness+1])
