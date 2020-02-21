@@ -25,9 +25,10 @@ module All(explode = 0.0) {
 translate([0, 0, max(0, explode-0.1) * 100]) {
     Lid();
     
-    Lid_PlaceButton()
-    translate([0, 0, max(0, explode-0.8) * 500])
-    Button();
+    for (b = lid_buttons)
+        Lid_PlaceButton(b[0])
+            translate([0, 0, max(0, explode-0.8) * 500])
+                Button();
     
     Lid_PlaceLCDScreen()
     translate([0, 0, max(0, explode-0.8) * -300])
