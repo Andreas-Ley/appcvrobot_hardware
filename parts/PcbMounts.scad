@@ -36,7 +36,8 @@ module Cutput_PiCamera() {
 
 
 module PcbMounts_PlaceMainBoard() {
-    translate([3, -35, thickness*2+pcb_spacing])
+    //translate([3, -35, thickness*2+pcb_spacing])
+    translate([3, -50, thickness*2+pcb_spacing])
     children();
 }
 

@@ -67,7 +67,9 @@ module BasePlate_BatteryLocations() {
 
 module BasePlate() {
 
-    size = lookup(NemaSideSize, Nema17_Andy);
+    clearence=0.2;
+
+    size = lookup(NemaSideSize, Nema17_Andy) + (for_0_6_nozzle?clearence*2:0.0);
     length = lookup(NemaLengthMedium, Nema17_Andy);
     extrusionDiameter = lookup(NemaRoundExtrusionDiameter, Nema17_Andy);
     extrusionHeight = lookup(NemaRoundExtrusionHeight, Nema17_Andy);
@@ -79,8 +81,8 @@ module BasePlate() {
             cube([lookup(NemaSideSize, Nema17_Andy), lookup(NemaSideSize, Nema17_Andy), thickness]);
 */
             translate([
-                    -lookup(NemaSideSize, Nema17_Andy)/2, 
-                    -lookup(NemaSideSize, Nema17_Andy)/2 - thickness, 
+                    -size/2, 
+                    -size/2 - thickness, 
                     0])
             cube([
                 size+thickness/2, 
@@ -96,8 +98,8 @@ module BasePlate() {
             
 
             translate([
-                    -lookup(NemaSideSize, Nema17_Andy)/2-1, 
-                    -lookup(NemaSideSize, Nema17_Andy)/2,
+                    -size/2-1, 
+                    -size/2,
                     extrusionHeight])
             cube([
                 size+1, 
@@ -106,7 +108,7 @@ module BasePlate() {
 
             translate([
                     -18/2 - 20, 
-                    lookup(NemaSideSize, Nema17_Andy)/2-1,
+                    size/2-1,
                     length-10])
             cube([
                 38, 
@@ -196,12 +198,12 @@ module BasePlate() {
             rotate([0, 180, 180])
             translate([0, 0, -0.5])
             linear_extrude(height = 2) {
-                translate([0, -40, 0])
-                text("Initial design: Andreas Ley", size=4, halign="center");
+                translate([0, -41, 0])
+                text("Initial design: Andreas Ley", size=5, font = "Liberation Sans:style=Bold", halign="center");
                 translate([0, -50, 0])
-                text("Adapted for TU-Berlin:", size=4, halign="center");
-                translate([0, -56, 0])
-                text("Alexander Wolters, Monika Kwiatkowski, Andreas Ley", size=4, halign="center");
+                text("Adapted for TU-Berlin:", size=5, font = "Liberation Sans:style=Bold", halign="center");
+                translate([0, -58, 0])
+                text("Alexander Wolters, Monika Kwiatkowski, Andreas Ley", font = "Liberation Sans:style=Bold", size=5, halign="center");
             }            
             
 

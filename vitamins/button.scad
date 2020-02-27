@@ -27,7 +27,7 @@ module Button() {
 module ButtonHole(clearence = 0.2) {
 
     translate([0 , 0 , -8.7])
-     cylinder(  9.4,   d=6.8, true,$fn=100);
+     cylinder(  9.4,   d=6.8+clearence*2, true,$fn=100);
 };
 
 Button();

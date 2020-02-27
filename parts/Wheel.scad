@@ -1,4 +1,5 @@
 include<../vitamins/StepperMotor.scad>
+include <../config/config.scad>
 
 module WheelSpokes(wheelWidth = 20, wheelDiameter = 70) {
     
@@ -7,7 +8,7 @@ module WheelSpokes(wheelWidth = 20, wheelDiameter = 70) {
     flexWidth = 5;
     
     inner_shaft_d = 13;
-    clearence = 0.1;
+    clearence = (for_0_6_nozzle?0.2:0.1);
     thickness = 2;
     difference() {
         
@@ -91,5 +92,6 @@ intersection() {
 }
 
 WheelSpokes();
-translate([0, 0, 20])
-WheelRubber();
+
+//translate([0, 0, 20])
+//WheelRubber();

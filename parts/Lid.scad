@@ -12,6 +12,9 @@ use <../vitamins/AdOn.scad>
 use <BasePlate.scad>
 use <PcbMounts.scad>
 
+lid_serial_number = "#05";
+
+
 Lid_height = 50;
 
 module LidScrewCone() {
@@ -31,7 +34,7 @@ module LidScrewCone() {
 }
 
 module Lid_PlaceButton(index) {
-    translate([-50+index*10, 25, Lid_height+thickness*2])
+    translate([-60+index*15, 25, Lid_height+thickness*2])
     children();
 }
 
@@ -72,30 +75,31 @@ module Lid() {
             cylinder($fn=200, d1 = bucket_radius*2, d2=topDiameter, h = Lid_height);
             
             
-            translate([0, 0, thickness*2 + Lid_height - 0.5])
+            translate([0, 0, thickness*2 + Lid_height - 0.75])
             linear_extrude(height = 2) {
                 translate([45, AddOn_y, 0])
                 rotate([0, 0, 90])
-                scale(0.3)
+                scale(0.4)
                 import("logos/TU_Logo_kurz_Pantone_black_uncoated.svg", center=true);
 
                 translate([-45, AddOn_y, 0])
                 rotate([0, 0, 90])
-                scale(0.35)
+                scale(0.45)
                 import("logos/CVLogo.svg", center=true);
                 
-                translate([0, -5, 0])
+                translate([62.5, 0, 0])
                 rotate([0, 0, 90])
-                text("#01", size=8, halign="center", valign="center");
-                translate([12, -5, 0])
+                text(lid_serial_number, size=10, font = "Liberation Sans:style=Bold", halign="center", valign="center");
+
+                translate([75, 0, 0])
                 rotate([0, 0, 90])
-                text("Computer Vision", font = "Liberation Sans:style=Bold", size=3.5, halign="center", valign="center");
+                text("Computer Vision", font = "Liberation Sans:style=Bold", size=6.0, halign="center", valign="center");
                 
                 for (b = lid_buttons)
                     Lid_PlaceButton(b[0])
                     rotate([0, 0, 90])
                     translate([-8, 0, 0])
-                    text(b[1], size=4.5, font = "Liberation Sans:style=Bold", halign="right", valign="center");
+                    text(b[1], size=6, font = "Liberation Sans:style=Bold", halign="right", valign="center");
             }
 
             
@@ -150,12 +154,22 @@ module Lid() {
                 translate([0, 0, -thickness-2])
                 intersection() {
                     union() {
-                        for (y = [-7:7]) {
-                            for (x = [-7:7]) {
-                                translate([x*2 + y*4, x*2 - y*4+0, 0])
-                                cube([3.5, 1.5, 5]);
-                                translate([x*2 + y*4, x*2 - y*4+2, 0])
-                                cube([1.5, 3.5, 5]);
+                        if (!for_0_6_nozzle) {
+                            for (y = [-7:7]) {
+                                for (x = [-7:7]) {
+                                    translate([x*2 + y*4, x*2 - y*4+0, 0])
+                                    cube([3.5, 1.5, 5]);
+                                    translate([x*2 + y*4, x*2 - y*4+2, 0])
+                                    cube([1.5, 3.5, 5]);
+                                }
+                            }
+                        } else {
+                            rotate([0, 0, 45])
+                            for (y = [-7:7]) {
+                                for (x = [-7:7]) {
+                                    translate([x*5, y*5, 0])
+                                    cube([4, 4, 5]);
+                                }
                             }
                         }
                     }
