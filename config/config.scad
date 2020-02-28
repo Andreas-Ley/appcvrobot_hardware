@@ -10,3 +10,4 @@ thickness = 2;
 
 lid_buttons = [[0, "Power"], [1, "Execute"], [2, "Stop"]];
 
+for_0_6_nozzle = true;
