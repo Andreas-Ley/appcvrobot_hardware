@@ -136,7 +136,7 @@ module BasePlate() {
                 cylinder($fn=100, d1 = 50, d2 = 25, h = 10+offset);
             }
             
-            sphere($fn=100, d = ball_d+0.5);
+            sphere($fn=100, d = ball_d+0.5+(for_0_6_nozzle?clearence*2:0.0));
             translate([-25, -25, 10])
             cube([50, 50, 50]);
 
