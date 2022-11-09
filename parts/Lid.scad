@@ -247,6 +247,11 @@ module Lid() {
         translate([-20, -10, Lid_height+thickness+0.1])
         rotate([180, 0, 0])
         ZiptieHoop();
+        
+        translate([10, 70, Lid_height+thickness+0.1])
+        rotate([180, 0, 0])
+        ZiptieHoop();
+        
 /*
         WheelMount(false)
         translate([-55, 40, -thickness+0.1])
