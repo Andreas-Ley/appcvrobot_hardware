@@ -37,7 +37,7 @@ module Cutput_PiCamera() {
 
 module PcbMounts_PlaceMainBoard() {
     //translate([3, -35, thickness*2+pcb_spacing])
-    translate([3, -50, thickness*2+pcb_spacing])
+    translate([10, -45, thickness*2+pcb_spacing])
     children();
 }
 
@@ -49,7 +49,7 @@ module PcbMounts_PlacePowerBoard() {
 
 
 module PcbMounts_PlaceDCDCBoard() {
-    translate([60, -48, thickness*2+pcb_spacing])
+    translate([-70, -45, thickness*2+pcb_spacing])
     rotate([0, 0, 90])
     children();
 }
@@ -66,6 +66,16 @@ module PcbMountingColumn(height = pcb_spacing) {
     }
 }
 
+module PcbMountsPlace_CameraMountScrew() {
+    RpiCameraConfig = RaspiCamera_config();
+    cam_width = get(RpiCameraConfig, "width");
+
+    rotate([90, 0, 0])
+    translate([0, -3.6, 0])
+    translate([cam_width*3/10, -1, (cam_width/2 + 4)])
+    rotate([0, 90, 0])
+    children();
+};
 
 module PcbMounts() {
     topDiameter = bucket_radius*2-50;
@@ -81,6 +91,30 @@ module PcbMounts() {
             union() {
                 translate([-cam_width/2, -5-3/2, -cam_width/2 + 12])
                 cube([cam_width, 3, cam_width-12]);
+                support_w = 10;
+    
+                for (x=[-cam_width/2,cam_width/2-5]) {
+                    translate([x, 0, 0]) {
+                        translate([0, -5-3/2-support_w, -cam_width/2 + 12+1])
+                        difference() {
+                            cube([5, support_w, 20]);
+                            
+                            translate([-1, 0, 20])
+                            scale([1, support_w, 20])
+                            rotate([0, 90, 0])
+                            cylinder($fn=100, r=1, h = 10);
+                        }
+                        translate([0, -3.5, -cam_width/2 + 12+1])
+                        difference() {
+                            cube([5, 3.1, 20]);
+
+                            translate([-1, 3.1, 20])
+                            scale([1, 3.1, 20])
+                            rotate([0, 90, 0])
+                            cylinder($fn=100, r=1, h = 10);
+                        }
+                    }
+                }
                 
                 chunk_size = cam_width / 10;
                 for (i = [1:3])
@@ -96,15 +130,15 @@ module PcbMounts() {
                 for (i = [1:3])
                     translate([-cam_width/2 + (i*2+1) * chunk_size, -1, (cam_width/2 + 4)]) {
                         hull() {
-                            translate([0, +1.5, -4-chunk_size/2-0.1])
-                            cube([chunk_size-0.1, 3, 3]);
+                            translate([0, 2.5, -4-chunk_size/2-0.1])
+                            cube([chunk_size-0.1, 2, 6]);
                             
                             rotate([0, 90, 0])
                             cylinder($fn=20, d = 6, h = chunk_size-0.1);
                         }
                     }
-                translate([0, 2, 0])
-                cube([cam_width, 3, cam_width], center = true);
+                translate([0, 2.5, 0])
+                cube([cam_width, 2, cam_width], center = true);
             }
             translate([-cam_width/2-2, -1, (cam_width/2 + 4)])
             rotate([0, 90, 0])
@@ -146,14 +180,15 @@ module PcbMounts() {
             PcbMounts_PlaceDCDCBoard()
             DCDCBoard_BoreHoles(dcdcboard_config)
             translate([0, 0, -pcb_spacing])
+            rotate([0, 0, 180])
             PcbMountingColumn(pcb_spacing);
-            
+            /*
             powerboardConfig = PowerBoard_config();
             PcbMounts_PlacePowerBoard()
             PowerBoard_BoreHoles(powerboardConfig, true, false)
             translate([0, 0, -pcb_spacing-11-1.6])
             PcbMountingColumn(pcb_spacing+11+1.6);
-            
+            */
             
             translate([-60, 60, thickness*2])
             ZiptieHoop();
@@ -166,12 +201,13 @@ module PcbMounts() {
             rotate([0, 0, 90])
             ZiptieHoop();
 
+/*
             translate([-55, -42, thickness*2])
             ZiptieHoop();
+*/
 
 
-
-            translate([-20, -70, thickness*2])
+            translate([-30, -90, thickness*2])
             ZiptieHoop();
 
             translate([45, 7, thickness*2])
@@ -182,6 +218,7 @@ module PcbMounts() {
         VerticalConnectionScrewHoles()
         translate([0, 0, thickness*2+1])
         ScrewBore_M3x10();
+        
         
         CableDucts();
 
