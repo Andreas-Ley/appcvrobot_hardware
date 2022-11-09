@@ -21,6 +21,16 @@ function RaspiCamera_config() =
             ["lens_diameter", lens_diameter],
         ];
 
+module RaspiCamera_PlaceScrews(config) {
+    width = get(config, "width");
+    pcb_height = get(config, "pcb_height");
+    
+    for (i = [0, 90, 180, 270])
+        rotate([0, 0, i])
+        translate([get(config, "bore_distance")/2, get(config, "bore_distance")/2, pcb_height])
+        children();
+};
+
 module RaspiCamera(config) {
     width = get(config, "width");
     pcb_height = get(config, "pcb_height");
@@ -29,11 +39,9 @@ module RaspiCamera(config) {
         translate([-width/2, -width/2, 0])
         cube([width, width, pcb_height]);
         
-        for (i = [0, 90, 180, 270]) {
-            rotate([0, 0, i])
-            translate([get(config, "bore_distance")/2, get(config, "bore_distance")/2, -1])
-            cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
-        }
+        RaspiCamera_PlaceScrews(config)
+        translate([0, 0, -5])
+        cylinder($fn=20, d = get(config, "bore_diameter"), h = 10);
     }
     
     cylinder($fn=20, d = get(config, "lens_diameter"), h = get(config, "lens_height"));

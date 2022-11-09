@@ -3,11 +3,11 @@ use <../utils/struct.scad>
 function Mainboard_config() =
         let (
             pcb_height = 1.57,
-            width = 70,
-            height = 50,
-            bore_diameter = 3,
-            bore_spread_w = 26*2.54,
-            bore_spread_h = 18*2.54
+            width = 82.55,
+            height = 63.5,
+            bore_diameter = 2.2,
+            bore_spread_w = 77.47, //26*2.54,
+            bore_spread_h = 58.42 //18*2.54
         ) [
             ["pcb_height", pcb_height],
             ["width", width],
